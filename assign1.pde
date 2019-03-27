@@ -4,14 +4,13 @@ PImage heart;
 PImage rat;
 PImage robot;
 PImage soldier;
-int heartR;
-int robotX=floor(random(3,8))*80;
-int robotY=floor(random(3,6))*80;
-int soldierY=floor(random(3,6))*80;
-int lightX;
-int soldierX;
-
-
+int heartR=25;
+int robotX=floor(random(2,8))*80;
+int robotY=floor(random(2,6))*80;
+int soldierY=floor(random(2,6))*80;
+int lightX,lightY,lightLong;
+int lightMove,lightMove2;
+int soldierX=-80;
 
 
 void setup() {
@@ -22,8 +21,8 @@ void setup() {
   rat=loadImage("img/groundhog.png");
   robot=loadImage("img/robot.png");
   soldier=loadImage("img/soldier.png");
-  heartR=25;
-  lightX=robotX-10;
+  lightX=robotX+25;
+  lightY=robotY+37;
 }
 
 
@@ -60,13 +59,20 @@ void draw() {
   image(robot,robotX,robotY);
   
   //light
-  fill(#ff0000);
-  lightX=lightX-2;
-  rect(lightX,robotY+32,40,10,5);
+  stroke(#ff0000);
+  strokeCap(ROUND);
+  strokeWeight(10);
+  line(lightMove,lightY,lightMove2,lightY);
+  lightLong=(lightLong+2)%185;
+  lightX=robotX+25;
+  lightMove=min(lightX,lightX-lightLong);
+  lightMove2=min(lightX,lightMove+30);
   
   //soldier
   image(soldier,soldierX,soldierY);
-  soldierX=soldierX+10;
-  soldierX%=720;
+  soldierX+=5;
+  if(soldierX>640){
+  soldierX=-80; 
+  }
   
 }
